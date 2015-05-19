@@ -1,7 +1,4 @@
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <iostream>
-
+#include "processing.h"
 
 #define degreesToRadians(angleDegrees) (angleDegrees * CV_PI / 180.0)
 #define radiansToDegrees(angleRadians) (angleRadians * 180.0 / CV_PI)
@@ -128,52 +125,13 @@ float katStrzalki(cv::Mat& I){
 int main(int, char *[]) {
     std::cout << "Start ..." << std::endl;
 
-    cv::Mat images[] = {
-        cv::imread("prost.dib"),
-        cv::imread("kolo.dib"),
-        cv::imread("troj.dib"),
-//        cv::imread("elipsa.dib"),
-//        cv::imread("elipsa1.dib"),
-        cv::imread("strzalki_1.dib")
-    };
+    cv::Mat image = cv::imread("Lena.png");
+    cv::Mat max = rankFilter(image, 3, 0);
+    cv::imshow("Lena",image);
+    cv::imshow("Max",max);
+    std::cout << image.isContinuous() << max.isContinuous() << std::endl;
+    cv::imwrite("Max.png",max);
 
-    for (int i = 0; i < 3; ++i){
-        float m00 = moment_zwykly(0, 0, images[i]);
-        float m20 = moment_zwykly(2, 0, images[i]);
-        float m02 = moment_zwykly(0, 2, images[i]);
-        float m10 = moment_zwykly(1, 0, images[i]);
-        float m01 = moment_zwykly(0, 1, images[i]);
-        float m11 = moment_zwykly(1, 1, images[i]);
-        float M20 = m20 - pow(m10, 2) / m00;
-        float M02 = m02 - pow(m01, 2) / m00;
-        float M11 = m11 - m10*m01 / m00;
-        float M1 = (M20 + M02) / pow(m00, 2);
-        float M7 = (M20*M02 - pow(M11, 2)) / pow(m00, 4);
-        float S = pole(images[i]);
-        float L = obwod(images[i]);
-        float W3 = (L / (2 * sqrt(CV_PI * S))) - 1;
-
-        std::cout << "Obraz #" << i + 1 << ". " << std::endl;
-        std::cout << "\tM1 " << M1 << std::endl;
-        std::cout << "\tM7 " << M7 << std::endl;
-        std::cout << "\tObwod " << L << std::endl;
-        std::cout << "\tPole " << S << std::endl;
-        std::cout << "\tW3 " << W3 << std::endl;
-    }
-
-//    cv::Mat strzalki[5];
-    for (int i = 0; i <= 180; i = i + 45){
-        cv::Mat mm = boundingBox(i, images[3]);
-
-        cv::imshow(std::to_string(i), mm);
-
-        std::cout << "Obraz #" << i << ". " << std::endl;
-        std::cout << "\tKat " << katStrzalki(mm) << std::endl;
-
-    }
-
- //   std::cout << image2.isContinuous() << max.isContinuous() << std::endl;
- //   cv::imwrite("Max.png",max);
     cv::waitKey(-1);
     return 0;
 }

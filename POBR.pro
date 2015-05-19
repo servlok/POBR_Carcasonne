@@ -5,7 +5,8 @@ CONFIG -= qt
 
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.10
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    processing.cpp
 
 LIBS += -L/usr/local/lib \
     -lopencv_core \
@@ -27,4 +28,7 @@ QMAKE_EXTRA_TARGETS += first copydata
 
 include(deployment.pri)
 qtcAddDeployment()
+
+HEADERS += \
+    processing.h
 
