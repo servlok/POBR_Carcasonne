@@ -125,12 +125,17 @@ float katStrzalki(cv::Mat& I){
 int main(int, char *[]) {
     std::cout << "Start ..." << std::endl;
 
-    cv::Mat image = cv::imread("Lena.png");
-    cv::Mat max = rankFilter(image, 3, 0);
-    cv::imshow("Lena",image);
+    cv::Mat image = cv::imread("Skanuj.jpeg");
+    cv::Mat max = progowanie(image, 175, false);
+
+    max = rankFilter(max, 3, 8);
+    max = rankFilter(max, 3, 8);
+    max = rankFilter(max, 3, 0);
+    max = rankFilter(max, 3, 0);
+    max = rankFilter(max, 3, 0);
+
     cv::imshow("Max",max);
-    std::cout << image.isContinuous() << max.isContinuous() << std::endl;
-    cv::imwrite("Max.png",max);
+    cv::namedWindow("Max", cv::WINDOW_NORMAL);
 
     cv::waitKey(-1);
     return 0;
