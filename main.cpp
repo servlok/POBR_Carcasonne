@@ -88,29 +88,6 @@ int obwod(cv::Mat& I){
     return m;
 }
 
-cv::Mat boundingBox(int rColor, cv::Mat& I){
-    cv::Mat_<cv::Vec3b> _I = I;
-    int minX, maxX, minY, maxY;
-    minX = maxX = minY = maxY = -1;
-    for (int i = 1; i < _I.rows - 1; ++i){
-        for (int j = 1; j < _I.cols - 1; ++j){
-            if (_I(i, j)[2] == rColor){
-                if (minX == -1){
-                    minX = maxX = i;
-                    maxY = minY = j;
-                }
-                else {
-                    minX = std::min(minX, i);
-                    minY = std::min(minY, j);
-                    maxX = std::max(maxX, i);
-                    maxY = std::max(maxY, j);
-                }
-            }
-        }
-    }
-    return cv::Mat(I, cv::Rect(minY, minX, maxY - minY, maxX - minX)).clone();
-}
-
 float katStrzalki(cv::Mat& I){
 
     int cX = moment_zwykly(1, 0, I) / moment_zwykly(0, 0, I);
@@ -136,11 +113,15 @@ int main(int, char *[]) {
     prog = rankFilter(prog, 3, 0);
     prog = rankFilter(prog, 3, 0);
 
-    cv::Mat cut = floodCutting(prog, 1, 1);
+    MatBoxList list = partitionBoxes(prog);
 
-    cv::imshow("New",cut);
+    int i = 0;
+    for( MatBox mat : list){
+        cv::imshow(std::to_string(i), mat.first);
+        ++i;
+    }
+
     cv::imshow("Old",prog);
-
     cv::imshow("Normal",image);
 
 //    cv::imwrite("prog.jpeg", max);

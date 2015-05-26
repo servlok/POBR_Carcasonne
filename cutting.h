@@ -6,6 +6,12 @@
 #include <iostream>
 #include <list>
 
+typedef std::pair< cv::Mat, cv::Rect > MatBox;
+typedef std::list< MatBox > MatBoxList;
+
 cv::Mat floodCutting(cv::Mat& I, const int& x, const int& y);
+std::list< cv::Mat > partition(cv::Mat& I);
+MatBoxList partitionBoxes(cv::Mat& I);
+
 
 #endif // CUTTING_H
