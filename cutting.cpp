@@ -46,8 +46,6 @@ std::list<cv::Mat> partition(cv::Mat &I)
         }
     }
 
-//    list.push_back(floodCutting(I, 1, 1));
-
     return list;
 }
 
@@ -72,7 +70,7 @@ MatBox boundingBox(int rColor, cv::Mat& I){
         }
     }
     MatBox mb;
-    mb.second = cv::Rect(minY, minX, maxY - minY, maxX - minX);
+    mb.second = cv::Rect(minY, minX, maxY - minY + 1, maxX - minX + 1);
     mb.first = cv::Mat(I, mb.second).clone();
     return mb;
 }
