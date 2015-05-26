@@ -34,13 +34,14 @@ cv::Mat floodCutting(cv::Mat &I, const int &x, const int &y)
 
 std::list<cv::Mat> partition(cv::Mat &I)
 {
-    cv::Mat_<cv::Vec3b> _I = I;
+    cv::Mat mat = I.clone();
+    cv::Mat_<cv::Vec3b> _I = mat;
     std::list< cv::Mat > list;
 
-    for( int i = 0; i < I.rows; ++i){
-        for( int j = 0; j < I.cols; ++j ){
+    for( int i = 0; i < mat.rows; ++i){
+        for( int j = 0; j < mat.cols; ++j ){
             if(_I(i, j)[0] == 0){
-                list.push_back(floodCutting(I, i, j));
+                list.push_back(floodCutting(mat, i, j));
             }
         }
     }

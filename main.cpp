@@ -29,8 +29,7 @@ int main(int, char *[]) {
     std::cout << "Start ..." << std::endl;
 
     cv::Mat image = cv::imread("prog.jpeg");
-    cv::Mat copy = cv::imread("test.jpeg");
-    cv::Mat prog = progowanie(copy, 175, false);
+    cv::Mat prog = progowanie(image, 175, false);
 
     prog = rankFilter(prog, 3, 8);
     prog = rankFilter(prog, 3, 8);
