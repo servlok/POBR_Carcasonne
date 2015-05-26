@@ -7,7 +7,8 @@ QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.10
 
 SOURCES += main.cpp \
     processing.cpp \
-    cutting.cpp
+    cutting.cpp \
+    moments.cpp
 
 LIBS += -L/usr/local/lib \
     -lopencv_core \
@@ -30,5 +31,6 @@ qtcAddDeployment()
 
 HEADERS += \
     processing.h \
-    cutting.h
+    cutting.h \
+    moments.h
 

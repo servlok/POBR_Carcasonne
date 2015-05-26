@@ -4,28 +4,6 @@
 #define degreesToRadians(angleDegrees) (angleDegrees * CV_PI / 180.0)
 #define radiansToDegrees(angleRadians) (angleRadians * 180.0 / CV_PI)
 
-cv::Mat& perform(cv::Mat& I){
-  CV_Assert(I.depth() != sizeof(uchar));
-  switch(I.channels())  {
-  case 1:
-    for( int i = 0; i < I.rows; ++i)
-        for( int j = 0; j < I.cols; ++j )
-            I.at<uchar>(i,j) = (I.at<uchar>(i,j)/32)*32;
-    break;
-  case 3:
-    cv::Mat_<cv::Vec3b> _I = I;
-    for( int i = 0; i < I.rows; ++i)
-        for( int j = 0; j < I.cols; ++j ){
-            _I(i,j)[0] = (_I(i,j)[0]/32)*32;
-            _I(i,j)[1] = (_I(i,j)[1]/32)*32;
-            _I(i,j)[2] = (_I(i,j)[2]/32)*32;
-        }
-    I = _I;
-    break;
-  }
-  return I;
-}
-
 cv::Mat selectMax(cv::Mat& I){
     CV_Assert(I.depth() != sizeof(uchar));
     cv::Mat  res(I.rows,I.cols, CV_8UC3);
@@ -45,59 +23,6 @@ cv::Mat selectMax(cv::Mat& I){
         break;
     }
     return res;
-}
-
-float moment_zwykly(const float &p, const float &q, cv::Mat& I){
-
-    float m = 0;
-    cv::Mat_<cv::Vec3b> _I = I;
-    for (int i = 0; i < _I.rows; ++i)
-        for (int j = 0; j < _I.cols; ++j)
-            if (!_I(i, j)[0])
-                m += pow(i, p) * pow(j, q);
-
-    return m;
-}
-
-float pole(cv::Mat& I){
-    return moment_zwykly( 0, 0, I);
-}
-
-int obwod(cv::Mat& I){
-
-    int m = 0;
-    cv::Mat_<cv::Vec3b> _I = I;
-
-    for (int i = 1; i < _I.rows - 1; ++i)
-        for (int j = 1; j < _I.cols - 1; ++j)
-
-            if (!_I(i, j)[0]){
-
-                bool jest = false;
-                for (int a = i - 1; a <= i + 1; ++a)
-                    for (int b = j - 1; b <= j + 1; ++b){
-                        if (_I(a, b)[0]){
-                            jest = true;
-                            break;
-                        }
-                    }
-
-                if (jest)
-                    ++m;
-            }
-    return m;
-}
-
-float katStrzalki(cv::Mat& I){
-
-    int cX = moment_zwykly(1, 0, I) / moment_zwykly(0, 0, I);
-    int cY = moment_zwykly(0, 1, I) / moment_zwykly(0, 0, I);
-    int geoCenterX = I.rows / 2;
-    int geoCenterY = I.cols / 2;
-
-    float opposite = abs(geoCenterX - cX);
-    float adjancent = abs(geoCenterY - cY);
-    return radiansToDegrees(std::atan(adjancent / opposite));
 }
 
 int main(int, char *[]) {
