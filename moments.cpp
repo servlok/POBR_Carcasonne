@@ -1,6 +1,5 @@
 #include "moments.h"
 
-
 float moment_zwykly(const float &p, const float &q,const cv::Mat& I){
 
     float m = 0;
@@ -11,10 +10,6 @@ float moment_zwykly(const float &p, const float &q,const cv::Mat& I){
                 m += pow(i, p) * pow(j, q);
 
     return m;
-}
-
-float pole(const cv::Mat& I){
-    return moment_zwykly( 0, 0, I);
 }
 
 int obwod(const cv::Mat& I){
@@ -42,7 +37,6 @@ int obwod(const cv::Mat& I){
     return m;
 }
 
-
 MatInfo doTheMath(const MatBox &matBox)
 {
     MatInfo info;
@@ -60,7 +54,7 @@ MatInfo doTheMath(const MatBox &matBox)
     float M11 = m11 - m10*m01 / m00;
     float M1 = (M20 + M02) / pow(m00, 2);
     float M7 = (M20*M02 - pow(M11, 2)) / pow(m00, 4);
-    float S = pole(matBox.first);
+    float S = m00;
     float L = obwod(matBox.first);
 
     info.M1 = M1;
