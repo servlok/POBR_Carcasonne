@@ -1,4 +1,5 @@
 #include "processing.h"
+#include "cutting.h"
 
 #define degreesToRadians(angleDegrees) (angleDegrees * CV_PI / 180.0)
 #define radiansToDegrees(angleRadians) (angleRadians * 180.0 / CV_PI)
@@ -125,17 +126,25 @@ float katStrzalki(cv::Mat& I){
 int main(int, char *[]) {
     std::cout << "Start ..." << std::endl;
 
-    cv::Mat image = cv::imread("Skanuj.jpeg");
-    cv::Mat max = progowanie(image, 175, false);
+    cv::Mat image = cv::imread("prog.jpeg");
+    cv::Mat copy = cv::imread("test.jpeg");
+    cv::Mat prog = progowanie(copy, 175, false);
 
-    max = rankFilter(max, 3, 8);
-    max = rankFilter(max, 3, 8);
-    max = rankFilter(max, 3, 0);
-    max = rankFilter(max, 3, 0);
-    max = rankFilter(max, 3, 0);
+    prog = rankFilter(prog, 3, 8);
+    prog = rankFilter(prog, 3, 8);
+    prog = rankFilter(prog, 3, 0);
+    prog = rankFilter(prog, 3, 0);
+    prog = rankFilter(prog, 3, 0);
 
-    cv::imshow("Max",max);
-    cv::namedWindow("Max", cv::WINDOW_NORMAL);
+    cv::Mat cut = floodCutting(prog, 1, 1);
+
+    cv::imshow("New",cut);
+    cv::imshow("Old",prog);
+
+    cv::imshow("Normal",image);
+
+//    cv::imwrite("prog.jpeg", max);
+//    cv::namedWindow("Max", cv::WINDOW_NORMAL);
 
     cv::waitKey(-1);
     return 0;
