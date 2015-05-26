@@ -25,18 +25,6 @@ cv::Mat selectMax(cv::Mat& I){
     return res;
 }
 
-float katStrzalki(cv::Mat& I){
-
-    int cX = moment_zwykly(1, 0, I) / moment_zwykly(0, 0, I);
-    int cY = moment_zwykly(0, 1, I) / moment_zwykly(0, 0, I);
-    int geoCenterX = I.rows / 2;
-    int geoCenterY = I.cols / 2;
-
-    float opposite = abs(geoCenterX - cX);
-    float adjancent = abs(geoCenterY - cY);
-    return radiansToDegrees(std::atan(adjancent / opposite));
-}
-
 int main(int, char *[]) {
     std::cout << "Start ..." << std::endl;
 

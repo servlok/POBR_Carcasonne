@@ -1,7 +1,7 @@
 #include "moments.h"
 
 
-float moment_zwykly(const float &p, const float &q, cv::Mat& I){
+float moment_zwykly(const float &p, const float &q,const cv::Mat& I){
 
     float m = 0;
     cv::Mat_<cv::Vec3b> _I = I;
@@ -13,11 +13,11 @@ float moment_zwykly(const float &p, const float &q, cv::Mat& I){
     return m;
 }
 
-float pole(cv::Mat& I){
+float pole(const cv::Mat& I){
     return moment_zwykly( 0, 0, I);
 }
 
-int obwod(cv::Mat& I){
+int obwod(const cv::Mat& I){
 
     int m = 0;
     cv::Mat_<cv::Vec3b> _I = I;

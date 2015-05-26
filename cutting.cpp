@@ -13,9 +13,9 @@ void flood(cv::Mat_<cv::Vec3b> &I, cv::Mat_<cv::Vec3b> &R, const int &x, const i
         flood(I, R, x - 1, y);
     if(y > 0)
         flood(I, R, x, y - 1);
-    if(x < I.rows)
+    if(x < I.rows - 1)
         flood(I, R, x + 1, y);
-    if(y < I.cols)
+    if(y < I.cols - 1)
         flood(I, R, x, y + 1);
 }
 
