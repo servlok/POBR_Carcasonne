@@ -52,13 +52,18 @@ MatInfo doTheMath(const MatBox &matBox)
     float M20 = m20 - pow(m10, 2) / m00;
     float M02 = m02 - pow(m01, 2) / m00;
     float M11 = m11 - m10*m01 / m00;
-    float M1 = (M20 + M02) / pow(m00, 2);
-    float M7 = (M20*M02 - pow(M11, 2)) / pow(m00, 4);
-    float S = m00;
-    float L = obwod(matBox.first);
 
-    info.M1 = M1;
-    info.M7 = M7;
-    info.S = S;
-    info.L = L;
+    info.M1 = (M20 + M02) / pow(m00, 2);
+    info.M2 = (pow((M20, M02), 2) + (4 * pow(M11, 2))) / pow(m00, 4);
+//    info.M3 =
+//    info.M4 =
+//    info.M5 =
+//    info.M6 =
+    info.M7 = (M20*M02 - pow(M11, 2)) / pow(m00, 4);
+//    info.M8 =
+//    info.M9 =
+//    info.M10 =
+
+    info.S = m00;
+    info.L = obwod(matBox.first);
 }
