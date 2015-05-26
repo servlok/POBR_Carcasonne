@@ -14,10 +14,8 @@ LIBS += -L/usr/local/lib \
     -lopencv_highgui
 
 QMAKE_CXXFLAGS+=-std=c++11
-QMAKE_CXXFLAGS+=-stdlib=libc++
 
 QMAKE_LFLAGS+=-std=c++11
-QMAKE_LFLAGS+=-stdlib=libc++
 
 INCLUDEPATH += /usr/local/include
 
