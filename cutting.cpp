@@ -1,22 +1,60 @@
 #include "cutting.h"
 #include "processing.h"
+#include <queue>
 
-void flood(cv::Mat_<cv::Vec3b> &I, cv::Mat_<cv::Vec3b> &R, const int &x, const int &y){
-    if(I(x, y)[0] == 255){
-        return;
-    }
+typedef std::pair<int, int> P;
 
+void color(cv::Mat_<cv::Vec3b> &I, cv::Mat_<cv::Vec3b> &R, const int &x, const int &y){
     setGrayScale(I(x, y), 255);
     setGrayScale(R(x, y), 0);
+}
 
-    if(x > 0)
-        flood(I, R, x - 1, y);
-    if(y > 0)
-        flood(I, R, x, y - 1);
-    if(x < I.rows - 1)
-        flood(I, R, x + 1, y);
-    if(y < I.cols - 1)
-        flood(I, R, x, y + 1);
+bool check_validity(const cv::Mat_<cv::Vec3b> &I, const int &x, const int &y){
+    if(x < 0 || y < 0 || x >= I.rows || y >= I.cols )
+        return false;
+
+    return I(x,y)[0] == 0;
+}
+
+void flood(cv::Mat_<cv::Vec3b> &I, cv::Mat_<cv::Vec3b> &R, const int &x, const int &y){
+
+    std::queue< P > q;
+    q.push(P(x, y));
+
+    color(I, R, x, y);
+
+    while (!q.empty()) {
+       P p = q.front();
+       q.pop();
+       int pX = p.first;
+       int pY = p.second;
+
+       int nX = pX + 1;
+       int nY = pY;
+       if(check_validity(I, nX, nY)){
+           color(I, R, nX, nY);
+            q.push(P(nX, nY));
+       }
+
+       nX = pX - 1;
+       if(check_validity(I, nX, nY)){
+           color(I, R, nX, nY);
+            q.push(P(nX, nY));
+       }
+
+       nX = pX;
+       nY = pY + 1;
+       if(check_validity(I, nX, nY)){
+           color(I, R, nX, nY);
+            q.push(P(nX, nY));
+       }
+
+       nY = pY - 1;
+       if(check_validity(I, nX, nY)){
+           color(I, R, nX, nY);
+            q.push(P(nX, nY));
+       }
+    }
 }
 
 cv::Mat floodCutting(cv::Mat &I, const int &x, const int &y)
@@ -34,18 +72,17 @@ cv::Mat floodCutting(cv::Mat &I, const int &x, const int &y)
 
 std::list<cv::Mat> partition(cv::Mat &I)
 {
-    cv::Mat_<cv::Vec3b> _I = I;
+    cv::Mat mat = I.clone();
+    cv::Mat_<cv::Vec3b> _I = mat;
     std::list< cv::Mat > list;
 
-    for( int i = 0; i < I.rows; ++i){
-        for( int j = 0; j < I.cols; ++j ){
+    for( int i = 0; i < mat.rows; ++i){
+        for( int j = 0; j < mat.cols; ++j ){
             if(_I(i, j)[0] == 0){
-                list.push_back(floodCutting(I, i, j));
+                list.push_back(floodCutting(mat, i, j));
             }
         }
     }
-
-//    list.push_back(floodCutting(I, 1, 1));
 
     return list;
 }
@@ -71,7 +108,7 @@ MatBox boundingBox(int rColor, cv::Mat& I){
         }
     }
     MatBox mb;
-    mb.second = cv::Rect(minY, minX, maxY - minY, maxX - minX);
+    mb.second = cv::Rect(minY, minX, maxY - minY + 1, maxX - minX + 1);
     mb.first = cv::Mat(I, mb.second).clone();
     return mb;
 }

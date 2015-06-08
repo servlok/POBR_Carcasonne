@@ -65,4 +65,3 @@ cv::Mat progowanie(cv::Mat& I, const int& prog, const bool& odwrocone){
 
     return res;
 }
-

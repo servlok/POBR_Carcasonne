@@ -13,5 +13,4 @@ cv::Mat floodCutting(cv::Mat& I, const int& x, const int& y);
 std::list< cv::Mat > partition(cv::Mat& I);
 MatBoxList partitionBoxes(cv::Mat& I);
 
-
 #endif // CUTTING_H
