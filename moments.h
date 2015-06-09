@@ -25,4 +25,6 @@ typedef struct {
 
 MatInfo doTheMath(const MatBox &matBox);
 
+void printMatInfo(const MatInfo& mat);
+
 #endif // MOMENTS_H
