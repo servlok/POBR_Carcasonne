@@ -85,6 +85,8 @@ MatInfo doTheMath(const MatBox &matBox)
 
     info.S = m00;
     info.L = obwod(matBox.first);
+
+    return info;
 }
 
 void printMatInfo(const MatInfo& mat)

@@ -6,24 +6,55 @@
 int main(int, char *[]) {
     std::cout << "Start ..." << std::endl;
 
-    cv::Mat image = cv::imread("2.jpg");
-    cv::Mat prog = progowanie(image, 150, false);
+    cv::Mat image = cv::imread("3.jpg");
 
-    prog = rankFilter(prog, 3, 0);
-    prog = rankFilter(prog, 3, 0);
-    prog = rankFilter(prog, 3, 0);
+    cv::Mat prog = image;
 
-    MatBoxList list = partitionBoxes(prog);
+    double wygladzenie[3][3] ={{1,1,1},
+                            {1,4,1},
+                            {1,1,1}};
 
-    int i = 0;
-    for( MatBox mat : list){
-        cv::imshow(std::to_string(i), mat.first);
+    double wykrywanie_kraw[3][3] = {{-1,-1,-1},
+                                 {-1, 8,-1},
+                                 {-1,-1,-1}};
+
+//    prog = useMatrixFiltr(prog, 4, initTable3x3(wygladzenie), 3);
+
+//    prog = useMatrixFiltr(prog,1,initTable3x3(wykrywanie_kraw), 3);
+
+
+
+
+
+//    cv::GaussianBlur(image, g1, cv::Size(51,51), 0);
+//    cv::GaussianBlur(image, g2, cv::Size(3,3), 0);
+
+      prog = diffrenceOfGaussian(prog,41,3);
+
+
+
+      prog = progowanie(prog, 2, false);
+
+//    prog = rankFilter(prog, 3, 8);
+//    prog = rankFilter(prog, 3, 8);
+
+//    prog = rankFilter(prog, 3, 0);
+//    prog = rankFilter(prog, 3, 0);
+//    prog = rankFilter(prog, 3, 0);
+//    prog = rankFilter(prog, 3, 0);
+//    prog = rankFilter(prog, 3, 0);
+
+//    MatBoxList list = partitionBoxes(prog);
+
+//    int i = 0;
+//    for( MatBox mat : list){
+////        cv::imshow(std::to_string(i), mat.first);
 //        MatInfo matInfo = doTheMath(mat);
 //        printMatInfo(matInfo);
-        ++i;
-    }
+//        ++i;
+//    }
 
-//    cv::resize(prog,prog,cv::Size(300,300));
+    cv::resize(prog,prog,cv::Size(800,600));
     cv::imshow("Filtrowany",prog);
 //    cv::imshow("Normalny",image);
 
