@@ -91,15 +91,16 @@ MatInfo doTheMath(const MatBox &matBox)
 
 void printMatInfo(const MatInfo& mat)
 {
-    std::cout<<"M1: "<<mat.M1;
-    std::cout<<" M2: "<<mat.M2;
-    std::cout<<" M3: "<<mat.M3;
-    std::cout<<" M4: "<<mat.M4;
-    std::cout<<" M5: "<<mat.M5;
-    std::cout<<" M6: "<<mat.M6;
-    std::cout<<" M7: "<<mat.M7;
-    std::cout<<" M8: "<<mat.M8;
-    std::cout<<" M9: "<<mat.M9;
-    std::cout<<" M10: "<<mat.M10;
+    std::cout<<std::endl;
+    std::cout<<"M1: "<<mat.M1<<std::endl;
+    std::cout<<" M2: "<<mat.M2<<std::endl;
+    std::cout<<" M3: "<<mat.M3<<std::endl;
+    std::cout<<" M4: "<<mat.M4<<std::endl;
+    std::cout<<" M5: "<<mat.M5<<std::endl;
+    std::cout<<" M6: "<<mat.M6<<std::endl;
+    std::cout<<" M7: "<<mat.M7<<std::endl;
+    std::cout<<" M8: "<<mat.M8<<std::endl;
+    std::cout<<" M9: "<<mat.M9<<std::endl;
+    std::cout<<" M10: "<<mat.M10<<std::endl;
     std::cout<<std::endl;
 }

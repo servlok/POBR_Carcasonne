@@ -75,6 +75,38 @@ cv::Mat useMatrixFiltr(cv::Mat& I, const float& podzielnik, double **matrix, con
     int halfOfSize = floor(sizeOfMatrix/2);
     cv::Mat_<cv::Vec3b> _I = I;
     cv::Mat_<cv::Vec3b> _R = res;
+
+    for( int i =0 ; i < halfOfSize; ++i) {
+        for( int j = 0; j < I.cols; ++j) {
+            _R(i,j)[0] = _I(i,j)[0];
+            _R(i,j)[1] = _I(i,j)[1];
+            _R(i,j)[2] = _I(i,j)[2];
+        }
+    }
+    for( int j = 0; j < halfOfSize; ++j) {
+        for( int i = 0; i < I.rows; ++i) {
+            _R(i,j)[0] = _I(i,j)[0];
+            _R(i,j)[1] = _I(i,j)[1];
+            _R(i,j)[2] = _I(i,j)[2];
+        }
+    }
+
+    for(int i = I.rows - halfOfSize; i < I.rows; ++i ) {
+        for( int j = 0; j < I.cols; ++j) {
+            _R(i,j)[0] = _I(i,j)[0];
+            _R(i,j)[1] = _I(i,j)[1];
+            _R(i,j)[2] = _I(i,j)[2];
+        }
+    }
+
+    for( int j = I.cols - halfOfSize; j < I.cols; ++j) {
+        for( int i = 0; i < I.rows; ++i) {
+            _R(i,j)[0] = _I(i,j)[0];
+            _R(i,j)[1] = _I(i,j)[1];
+            _R(i,j)[2] = _I(i,j)[2];
+        }
+    }
+
     for( int i = halfOfSize; i < I.rows - halfOfSize; ++i)
         for( int j = halfOfSize; j < I.cols - halfOfSize; ++j ){
             float suma[3] = {0,0,0};
@@ -151,7 +183,6 @@ double **initTable3x3(double table[][3]) {
         newTable[i] = new double[3];
         for(int j=0; j<3; j++){
             newTable[i][j] = table[i][j];
-            std::cout<<"Wartosc: "<<newTable[i][j]<<" i: "<<i<<" j: "<<j<<std::endl;
         }
     }
 
